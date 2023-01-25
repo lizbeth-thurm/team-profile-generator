@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/skip-thurm/team-profile-generator#readme",
   "dependencies": {
+    "chalk": "^5.2.0",
     "inquirer": "^8.2.4"
   }
 }
