@@ -19,7 +19,9 @@ function createManagerHTML(employee){
 }
 
 function generateHTML(){
-    var html = `<!DOCTYPE html>
+    var html = `
+    
+    <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -28,13 +30,10 @@ function generateHTML(){
         <title>EMPLOYEES</title>
     </head>
     <body>
-        <div>`
+        <div>
+        
+        `
     
-    // [ MANAGER, MANAGER, MANAGER ]
-    // for (let i = 0; i < employeeArray.length; i++) {
-    //    let employee = employeeArray[i]
-    //    ..
-    //}
     employeeArray.forEach((employee) => {
         switch (employee.getRole()){
             case "Manager":

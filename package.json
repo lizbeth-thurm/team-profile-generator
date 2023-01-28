@@ -4,7 +4,7 @@
   "description": "A Node.js command-line application that takes in information about employees on a software engineering team and generates an HTML webpage that displays summaries for each person.",
   "main": "index.js",
   "scripts": {
-    "start":"node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/skip-thurm/team-profile-generator#readme",
   "dependencies": {
+    "bootstrap": "^5.3.0-alpha1",
     "chalk": "^5.2.0",
-    "inquirer": "^8.2.4"
+    "inquirer": "^8.2.4",
+    "jquery": "^3.6.3"
   }
 }
