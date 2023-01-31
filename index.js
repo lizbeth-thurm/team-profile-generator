@@ -1,28 +1,58 @@
-// import everything
+// import dependencies and files
 const inquirer = require("inquirer");
-const Manager = require("./lib/Manager");
 const fs = require("fs");
 const path = require("path");
 const { toNamespacedPath } = require("path");
-const Employee = require("./lib/Employee");
 
+const Employee = require("./lib/Employee");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+
+// establish output path
 const outputFile = path.join(path.resolve(__dirname, "dist"), "index.html");
 
+// empty array for storing employee information
 const employeeArray = [];
 
+// function to create HTML for managers
 function createManagerHTML(employee) {
     return `
-    <div>
+    <div class="p-3 mb-2 bg-primary text-white border border-dark rounded">
         <h3>MANAGER</h3>
         <h4>${employee.getName()}</h4>
+        <p>ID: ${employee.getId()}</p>
         <p>EMAIL: ${employee.getEmail()}</p>
         <p>OFFICE: ${employee.getOfficeNumber()}</p>
-    </div>
-    `
+    </div>`
 }
 
+// function to create HTML for engineers
+function createEngineerHTML(employee) {
+    return `
+    <div class="p-3 mb-2 bg-primary text-white border border-dark rounded">
+        <h3>ENGINEER</h3>
+        <h4>${employee.getName()}</h4>
+        <p>ID: ${employee.getId()}</p>
+        <p>EMAIL: ${employee.getEmail()}</p>
+        <p>GITHUB: ${employee.getGithub()}</p>
+    </div>`
+}
+
+// function to create HTML for interns
+function createInternHTML(employee) {
+    return `
+    <div class="p-3 mb-2 bg-primary text-white border border-dark rounded">
+        <h3>INTERN</h3>
+        <h4>${employee.getName()}</h4>
+        <p>ID: ${employee.getId()}</p>
+        <p>EMAIL: ${employee.getEmail()}</p>
+        <p>SCHOOL: ${employee.getSchool()}</p>
+    </div>`
+}
+
+// function to generate HTML for app
 function generateHTML() {
-    console.log(employeeArray);
     var html =
         `
     <!doctype html>
@@ -50,13 +80,24 @@ function generateHTML() {
             </h1>
         </div>
     
-        <div class="p-3 mb-2 bg-primary text-white border border-dark rounded">
+        <div>
 
 ${employeeArray.map((employee) => {
-    // getrole switch statements...
-    return createManagerHTML(employee);
+            switch (employee.getRole()) {
+                case "Manager":
+                    return createManagerHTML(employee);
+                    break;
+                case "Engineer":
+                    return createEngineerHTML(employee);
+                    break;
+                case "Intern":
+                    return createInternHTML(employee);
+                    break;
+                default:
+                    break;
+            }
         })
-    }
+        }
 
     </div>
     
@@ -73,9 +114,7 @@ ${employeeArray.map((employee) => {
     
     </html>
 `
-
-console.log("HTML", html);
-
+    // write HTML to index.html file in dist folder
     fs.writeFileSync(outputFile, html, "utf-8");
     console.log("Write successful; please check dist folder for index.html");
     process.exit();
@@ -83,6 +122,38 @@ console.log("HTML", html);
 
 
 // inquire for classes
+
+// main inquirer to start selection
+function mainPrompt() {
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "choice",
+            message: "Please select the position of the employee you would like to add or select the generate option to generate the site.",
+            choices: ["Manager", "Engineer", "Intern", "Generate"]
+        }
+    ]).then((resp) => {
+        switch (resp.choice) {
+            case "Manager":
+                createManager();
+                break;
+            case "Engineer":
+                createEngineer();
+                break;
+            case "Intern":
+                createIntern();
+                break;
+            case "Generate":
+                generateHTML();
+                break;
+            case "Default":
+                generateHTML();
+                break;
+        }
+    })
+}
+
+// function for creating manager
 function createManager() {
     inquirer.prompt(
         [
@@ -109,11 +180,8 @@ function createManager() {
         ]
     )
         .then((answers) => {
-            console.log(answers)
             employeeArray.push(new Manager(answers.name, answers.id, answers.email, answers.officeNumber));
 
-            // main prompt
-            // Setting 
             inquirer.prompt([
                 {
                     type: "list",
@@ -124,7 +192,7 @@ function createManager() {
             ]).then((resp) => {
                 switch (resp.choice) {
                     case "YES":
-                        createManager();
+                        mainPrompt();
                         break;
                     default:
                         generateHTML();
@@ -133,17 +201,122 @@ function createManager() {
         })
         .catch((error) => {
             if (error.isTtyError) {
-                // Prompt couldn't be rendered in the current environment
+                console.log("Error: Prompt couldn't be rendered in the current environmnt")
             } else {
-                // Something else went wrong
+                console.log(error);
             }
         });
 }
 
-// add instances to array [{},{}]
+// function for creating engineer
+function createEngineer() {
+    inquirer.prompt(
+        [
+            {
+                type: "input",
+                name: "name",
+                message: "What is the engineer's name?"
+            },
+            {
+                type: "input",
+                name: "id",
+                message: "What is the engineer's ID?"
+            },
+            {
+                type: "input",
+                name: "email",
+                message: "What is the engineer's email?"
+            },
+            {
+                type: "input",
+                name: "github",
+                message: "What is the engineer's GitHub username?"
+            }
+        ]
+    )
+        .then((answers) => {
+            employeeArray.push(new Engineer(answers.name, answers.id, answers.email, answers.github));
 
+            inquirer.prompt([
+                {
+                    type: "list",
+                    name: "choice",
+                    message: "Make another?",
+                    choices: ["YES", "NO"]
+                }
+            ]).then((resp) => {
+                switch (resp.choice) {
+                    case "YES":
+                        mainPrompt();
+                        break;
+                    default:
+                        generateHTML();
+                }
+            })
+        })
+        .catch((error) => {
+            if (error.isTtyError) {
+                console.log("Error: Prompt couldn't be rendered in the current environmnt")
+            } else {
+                console.log(error);
+            }
+        });
+}
 
-// generate string
+// function for creating intern
+function createIntern() {
+    inquirer.prompt(
+        [
+            {
+                type: "input",
+                name: "name",
+                message: "What is the intern's name?"
+            },
+            {
+                type: "input",
+                name: "id",
+                message: "What is the intern's id?"
+            },
+            {
+                type: "input",
+                name: "email",
+                message: "What is the intern's email?"
+            },
+            {
+                type: "input",
+                name: "school",
+                message: "What is the intern's school?"
+            }
+        ]
+    )
+        .then((answers) => {
+            employeeArray.push(new Intern(answers.name, answers.id, answers.email, answers.school));
 
-createManager();
+            inquirer.prompt([
+                {
+                    type: "list",
+                    name: "choice",
+                    message: "Make another?",
+                    choices: ["YES", "NO"]
+                }
+            ]).then((resp) => {
+                switch (resp.choice) {
+                    case "YES":
+                        mainPrompt();
+                        break;
+                    default:
+                        generateHTML();
+                }
+            })
+        })
+        .catch((error) => {
+            if (error.isTtyError) {
+                console.log("Error: Prompt couldn't be rendered in the current environmnt")
+            } else {
+                console.log(error);
+            }
+        });
+}
+
+mainPrompt();
 
