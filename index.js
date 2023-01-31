@@ -1,10 +1,13 @@
 // import dependencies and files
 const inquirer = require("inquirer");
-const Manager = require("./lib/Manager");
 const fs = require("fs");
 const path = require("path");
 const { toNamespacedPath } = require("path");
+
 const Employee = require("./lib/Employee");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 
 // establish output path
 const outputFile = path.join(path.resolve(__dirname, "dist"), "index.html");
@@ -15,45 +18,41 @@ const employeeArray = [];
 // function to create HTML for managers
 function createManagerHTML(employee) {
     return `
-    <div>
+    <div class="p-3 mb-2 bg-primary text-white border border-dark rounded">
         <h3>MANAGER</h3>
         <h4>${employee.getName()}</h4>
         <p>ID: ${employee.getId()}</p>
         <p>EMAIL: ${employee.getEmail()}</p>
         <p>OFFICE: ${employee.getOfficeNumber()}</p>
-    </div>
-    `
+    </div>`
 }
 
 // function to create HTML for engineers
 function createEngineerHTML(employee) {
     return `
-    <div>
+    <div class="p-3 mb-2 bg-primary text-white border border-dark rounded">
         <h3>ENGINEER</h3>
         <h4>${employee.getName()}</h4>
         <p>ID: ${employee.getId()}</p>
         <p>EMAIL: ${employee.getEmail()}</p>
         <p>GITHUB: ${employee.getGithub()}</p>
-    </div>
-    `
+    </div>`
 }
 
 // function to create HTML for interns
 function createInternHTML(employee) {
     return `
-    <div>
+    <div class="p-3 mb-2 bg-primary text-white border border-dark rounded">
         <h3>INTERN</h3>
         <h4>${employee.getName()}</h4>
         <p>ID: ${employee.getId()}</p>
         <p>EMAIL: ${employee.getEmail()}</p>
         <p>SCHOOL: ${employee.getSchool()}</p>
-    </div>
-    `
+    </div>`
 }
 
 // function to generate HTML for app
 function generateHTML() {
-    console.log(employeeArray);
     var html =
         `
     <!doctype html>
@@ -81,7 +80,7 @@ function generateHTML() {
             </h1>
         </div>
     
-        <div class="p-3 mb-2 bg-primary text-white border border-dark rounded">
+        <div>
 
 ${employeeArray.map((employee) => {
             switch (employee.getRole()) {
@@ -89,10 +88,10 @@ ${employeeArray.map((employee) => {
                     return createManagerHTML(employee);
                     break;
                 case "Engineer":
-                    return createEngineerHTML(engineer);
+                    return createEngineerHTML(employee);
                     break;
                 case "Intern":
-                    return createInternHTML(intern);
+                    return createInternHTML(employee);
                     break;
                 default:
                     break;
@@ -115,8 +114,6 @@ ${employeeArray.map((employee) => {
     
     </html>
 `
-
-
     // write HTML to index.html file in dist folder
     fs.writeFileSync(outputFile, html, "utf-8");
     console.log("Write successful; please check dist folder for index.html");
@@ -183,7 +180,6 @@ function createManager() {
         ]
     )
         .then((answers) => {
-            console.log(answers)
             employeeArray.push(new Manager(answers.name, answers.id, answers.email, answers.officeNumber));
 
             inquirer.prompt([
@@ -205,9 +201,9 @@ function createManager() {
         })
         .catch((error) => {
             if (error.isTtyError) {
-                // Prompt couldn't be rendered in the current environment
+                console.log("Error: Prompt couldn't be rendered in the current environmnt")
             } else {
-                // Something else went wrong
+                console.log(error);
             }
         });
 }
@@ -233,13 +229,12 @@ function createEngineer() {
             },
             {
                 type: "input",
-                name: "officeNumber",
+                name: "github",
                 message: "What is the engineer's GitHub username?"
             }
         ]
     )
         .then((answers) => {
-            console.log(answers)
             employeeArray.push(new Engineer(answers.name, answers.id, answers.email, answers.github));
 
             inquirer.prompt([
@@ -261,9 +256,9 @@ function createEngineer() {
         })
         .catch((error) => {
             if (error.isTtyError) {
-                // Prompt couldn't be rendered in the current environment
+                console.log("Error: Prompt couldn't be rendered in the current environmnt")
             } else {
-                // Something else went wrong
+                console.log(error);
             }
         });
 }
@@ -289,13 +284,12 @@ function createIntern() {
             },
             {
                 type: "input",
-                name: "officeNumber",
+                name: "school",
                 message: "What is the intern's school?"
             }
         ]
     )
         .then((answers) => {
-            console.log(answers)
             employeeArray.push(new Intern(answers.name, answers.id, answers.email, answers.school));
 
             inquirer.prompt([
@@ -317,9 +311,9 @@ function createIntern() {
         })
         .catch((error) => {
             if (error.isTtyError) {
-                // Prompt couldn't be rendered in the current environment
+                console.log("Error: Prompt couldn't be rendered in the current environmnt")
             } else {
-                // Something else went wrong
+                console.log(error);
             }
         });
 }
