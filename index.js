@@ -18,6 +18,7 @@ function createManagerHTML(employee) {
     <div>
         <h3>MANAGER</h3>
         <h4>${employee.getName()}</h4>
+        <p>ID: ${employee.getId()}</p>
         <p>EMAIL: ${employee.getEmail()}</p>
         <p>OFFICE: ${employee.getOfficeNumber()}</p>
     </div>
@@ -25,25 +26,27 @@ function createManagerHTML(employee) {
 }
 
 // function to create HTML for engineers
-function createManagerHTML(employee) {
+function createEngineerHTML(employee) {
     return `
     <div>
-        <h3>MANAGER</h3>
+        <h3>ENGINEER</h3>
         <h4>${employee.getName()}</h4>
+        <p>ID: ${employee.getId()}</p>
         <p>EMAIL: ${employee.getEmail()}</p>
-        <p>OFFICE: ${employee.getOfficeNumber()}</p>
+        <p>GITHUB: ${employee.getGithub()}</p>
     </div>
     `
 }
 
 // function to create HTML for interns
-function createManagerHTML(employee) {
+function createInternHTML(employee) {
     return `
     <div>
-        <h3>MANAGER</h3>
+        <h3>INTERN</h3>
         <h4>${employee.getName()}</h4>
+        <p>ID: ${employee.getId()}</p>
         <p>EMAIL: ${employee.getEmail()}</p>
-        <p>OFFICE: ${employee.getOfficeNumber()}</p>
+        <p>SCHOOL: ${employee.getSchool()}</p>
     </div>
     `
 }
