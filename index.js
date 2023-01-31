@@ -125,7 +125,32 @@ ${employeeArray.map((employee) => {
 
 // main inquirer to start selection
 function mainPrompt() {
-
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "choice",
+            message: "Please select the position of the employee you would like to add or select the generate option to generate the site.",
+            choices: ["Manager", "Engineer", "Intern", "Generate"]
+        }
+    ]).then((resp) => {
+        switch (resp.choice) {
+            case "Manager":
+                createManager();
+                break;
+            case "Engineer":
+                createEngineer();
+                break;
+            case "Intern":
+                createIntern();
+                break;
+            case "Generate":
+                generateHTML();
+                break;
+            case "Default":
+                generateHTML();
+                break;
+        }
+    })
 }
 
 // function for creating manager
