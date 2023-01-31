@@ -85,15 +85,15 @@
 `
 
 
-${employeeArray.forEach((employee) => {
-    console.log(employee);
-    console.log(employee.getRole());
-    console.log(createManagerHTML(employee));
-    switch (employee.getRole()) {
-        case "Manager":
-            return createManagerHTML(employee)
-        default:
-            break;
-    }
-})
-}
+// ${employeeArray.forEach((employee) => {
+//     console.log(employee);
+//     console.log(employee.getRole());
+//     console.log(createManagerHTML(employee));
+//     switch (employee.getRole()) {
+//         case "Manager":
+//             return createManagerHTML(employee)
+//         default:
+//             break;
+//     }
+// })
+// }
