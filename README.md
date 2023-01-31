@@ -18,7 +18,7 @@
   
   ## Links
 
-  [Link to Video Demonstrating Functionality](link)
+  [Link to Video Demonstrating Functionality](https://youtu.be/GF9grzfoCo8)
   
   [GitHub Repository](https://github.com/skip-thurm/team-profile-generator)
 
