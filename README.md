@@ -25,7 +25,7 @@
   ## Questions
   GitHub Username:
 
-  [skip-thurm](https://github.com/lizbeth-thurm)
+  [lizbeth-thurm](https://github.com/lizbeth-thurm)
 
   You can reach me with any questions at:
   
