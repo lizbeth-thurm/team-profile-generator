@@ -20,12 +20,12 @@
 
   [Link to Video Demonstrating Functionality](https://youtu.be/GF9grzfoCo8)
   
-  [GitHub Repository](https://github.com/skip-thurm/team-profile-generator)
+  [GitHub Repository](https://github.com/lizbeth-thurm/team-profile-generator)
 
   ## Questions
   GitHub Username:
 
-  [skip-thurm](https://github.com/skip-thurm)
+  [skip-thurm](https://github.com/lizbeth-thurm)
 
   You can reach me with any questions at:
   
